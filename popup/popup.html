@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lille</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+
+    <header class="header">
+      <div class="brand">
+        <img class="brand-logo" src="../assets/icons/icon48.png" width="28" height="28" alt="Lille" />
+        <div class="brand-text">
+          <h1 class="title">Lille</h1>
+          <span id="versionTag" class="version-tag">Detecting...</span>
+        </div>
+      </div>
+      <button id="btnRefresh" class="icon-btn" title="Refresh session & badges">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 20">
+          <title>reload</title>
+          <path fill="currentColor" d="M15.65 4.35A8 8 0 1 0 17.4 13h-2.22a6 6 0 1 1-1-7.22L11 9h7V2z"/>
+        </svg>
+      </button>
+    </header>
+
+    <div id="loadingView" class="loading-view">
+      <div class="loading-spinner">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+          <title>bubble-loading</title>
+          <circle cx="12" cy="2" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle>
+          <circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(45 12 12)"><animate attributeName="r" begin="0.125s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle>
+          <circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(90 12 12)"><animate attributeName="r" begin="0.25s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle>
+          <circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(135 12 12)"><animate attributeName="r" begin="0.375s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle>
+          <circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(180 12 12)"><animate attributeName="r" begin="0.5s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle>
+          <circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(225 12 12)"><animate attributeName="r" begin="0.625s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle>
+          <circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(270 12 12)"><animate attributeName="r" begin="0.75s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle>
+          <circle cx="12" cy="2" r="0" fill="currentColor" transform="rotate(315 12 12)"><animate attributeName="r" begin="0.875s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle>
+        </svg>
+      </div>
+      <p class="loading-text">Connecting to Discord...</p>
+    </div>
+
+    <div id="unauthView" class="unauth-view hidden">
+      <p class="unauth-msg">Discord session not detected.</p>
+      <p id="unauthHint" class="unauth-sub">Open Discord in a tab first.</p>
+      <button id="btnOpenDiscord" class="btn btn-primary">Open Discord</button>
+    </div>
+
+    <div id="badgesView" class="badges-view hidden">
+
+      <div class="user-row">
+        <img id="userAvatar" class="avatar" src="" alt="Avatar">
+        <div class="user-info">
+          <span id="userName" class="username">Loading...</span>
+          <span id="userTag" class="user-tag"></span>
+        </div>
+      </div>
+
+      <div class="sync-banner">
+        <svg class="sync-banner-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 16 16">
+          <title>alert-information-circle-solid</title>
+          <path fill="currentColor" d="M8 0a8 8 0 1 0 8 8a8.01 8.01 0 0 0-8-8m.857 12a.857.857 0 0 1-1.714 0V8a.857.857 0 0 1 1.714 0zM8 5.714A1.143 1.143 0 1 1 8 3.43a1.143 1.143 0 0 1 0 2.285"/>
+        </svg>
+        <span>Badges take approx. 1~3 days to update on your profile.</span>
+      </div>
+
+      <section class="badge-section">
+        <div class="section-header">
+          <span class="section-num">1</span>
+          <span class="section-title">Game Variety</span>
+          <span id="varietyStatus" class="section-status"></span>
+        </div>
+        <div class="tier-strip-wrap">
+          <button class="strip-arrow strip-arrow-left" aria-label="Scroll left" title="Scroll left">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><title>alt-arrow-left-linear</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="m15 5l-6 7l6 7"/></svg>
+          </button>
+          <div id="varietyStrip" class="tier-strip"></div>
+          <button class="strip-arrow strip-arrow-right" aria-label="Scroll right" title="Scroll right">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><title>alt-arrow-right-linear</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="m9 5l6 7l-6 7"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="badge-section">
+        <div class="section-header">
+          <span class="section-num">2</span>
+          <span class="section-title">Game Time</span>
+          <span id="timeStatus" class="section-status"></span>
+        </div>
+        <div class="tier-strip-wrap">
+          <button class="strip-arrow strip-arrow-left" aria-label="Scroll left" title="Scroll left">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><title>alt-arrow-left-linear</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="m15 5l-6 7l6 7"/></svg>
+          </button>
+          <div id="timeStrip" class="tier-strip"></div>
+          <button class="strip-arrow strip-arrow-right" aria-label="Scroll right" title="Scroll right">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><title>alt-arrow-right-linear</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="m9 5l6 7l-6 7"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="badge-section badge-section-locked">
+        <div class="section-header">
+          <span class="section-num locked">3</span>
+          <span class="section-title">Streaming</span>
+          <span id="streamingStatus" class="section-status locked">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24">
+              <title>bxs-lock-alt</title>
+              <path d="M20 12c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5S7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7z" fill="currentColor"/>
+            </svg>
+            Coming Soon
+          </span>
+        </div>
+        <div class="tier-strip-wrap">
+          <button class="strip-arrow strip-arrow-left" aria-label="Scroll left" title="Scroll left">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><title>alt-arrow-left-linear</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="m15 5l-6 7l6 7"/></svg>
+          </button>
+          <div id="streamingStrip" class="tier-strip tier-strip-locked"></div>
+          <button class="strip-arrow strip-arrow-right" aria-label="Scroll right" title="Scroll right">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><title>alt-arrow-right-linear</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="m9 5l6 7l-6 7"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <div class="stats-footer">
+        <div class="stats-text" id="statsText">
+          Claimed: <strong>0</strong> games · <strong>0h</strong> total
+        </div>
+      </div>
+
+    </div>
+
+    <div id="taskBox" class="task-box hidden">
+      <div class="task-info">
+        <div class="task-info-left">
+          <span id="taskIcon" class="task-icon"></span>
+          <span id="taskText">Starting session...</span>
+        </div>
+        <button id="btnCancel" class="btn-cancel-task">Cancel</button>
+      </div>
+      <div class="progress-bar">
+        <div id="taskBar" class="progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <footer class="extension-credit">
+      <div class="extension-copyright">
+        Developed by <a href="https://github.com/lilbarro" target="_blank" rel="noopener noreferrer">lilbarro</a>
+        <span class="credit-sep">·</span>
+        <span class="credit-ver">v1.3.2</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <div id="sheetBackdrop" class="sheet-backdrop hidden"></div>
+
+  <div id="bottomSheet" class="bottom-sheet hidden">
+    <div class="sheet-handle"></div>
+
+    <div class="sheet-header">
+      <div class="sheet-title-group">
+        <img id="sheetBadgeIcon" class="sheet-badge-img" src="" alt="Badge">
+        <div class="sheet-badge-meta">
+          <h3 id="sheetBadgeTitle" class="sheet-badge-name">Badge Name</h3>
+          <span id="sheetBadgeCategory" class="sheet-badge-cat">Game Badge</span>
+        </div>
+      </div>
+      <button id="btnSheetClose" class="sheet-close-btn" title="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 64 64">
+          <title>close</title>
+          <path fill="currentColor" d="M62 10.571L53.429 2L32 23.429L10.571 2L2 10.571L23.429 32L2 53.429L10.571 62L32 40.571L53.429 62L62 53.429L40.571 32z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="sheet-body">
+      <div class="progression-card">
+        <div class="progression-box">
+          <span class="progression-tag">Current</span>
+          <span id="sheetCurrentVal" class="progression-val">0</span>
+        </div>
+
+        <div class="progression-arrow">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+            <title>arrow-big-right-lines-filled</title>
+            <path fill="currentColor" d="M12.089 3.634A2 2 0 0 0 11 5.414l-.001 2.585L9 8a1 1 0 0 0-1 1v6l.007.117A1 1 0 0 0 9 16l1.999-.001l.001 2.587A2 2 0 0 0 14.414 20L21 13.414a2 2 0 0 0 0-2.828L14.414 4a2 2 0 0 0-2.18-.434zM3 8a1 1 0 0 1 .993.883L4 9v6a1 1 0 0 1-1.993.117L2 15V9a1 1 0 0 1 1-1m3 0a1 1 0 0 1 .993.883L7 9v6a1 1 0 0 1-1.993.117L5 15V9a1 1 0 0 1 1-1"/>
+          </svg>
+        </div>
+
+        <div class="progression-box target">
+          <span class="progression-tag">Target Tier</span>
+          <span id="sheetTargetVal" class="progression-val">0</span>
+        </div>
+      </div>
+
+      <div class="sheet-summary">
+        <span id="sheetSummaryText">Claiming required games & hours...</span>
+      </div>
+
+      <div class="sync-notice-box">
+        <div class="sync-notice-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 16 16">
+            <title>alert-information-circle-solid</title>
+            <path fill="currentColor" d="M8 0a8 8 0 1 0 8 8a8.01 8.01 0 0 0-8-8m.857 12a.857.857 0 0 1-1.714 0V8a.857.857 0 0 1 1.714 0zM8 5.714A1.143 1.143 0 1 1 8 3.43a1.143 1.143 0 0 1 0 2.285"/>
+          </svg>
+        </div>
+        <div class="sync-notice-text">
+          <strong>Notice:</strong> Discord profile badges take approximately 1~3 days to update after session completion. Please do not re-claim or spam requests while waiting.
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-actions">
+      <button id="btnSheetConfirm" class="btn btn-primary sheet-confirm-btn">
+        <span>Start Session</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16">
+          <path fill="currentColor" fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+        </svg>
+      </button>
+      <button id="btnSheetCancel" class="btn btn-secondary sheet-cancel-btn">Cancel</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
